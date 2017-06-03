@@ -14,13 +14,25 @@ module.exports = {
                 test: /\.js$/,
                 loader: 'babel-loader',
                 options: {
-                    presets: 'es2015'
+                    // nested array
+                    presets: [['es2015', {modules: false}]],
+                    plugins: ['syntax-dynamic-import']
                 }
+                // use: [{
+                //     loader: 'babel-loader',
+                //     options: {
+                //         presets: [['es2015', {modules: false}]],
+                //         plugins: ['syntax-dynamic-import']
+                //     }
+                // }]
             },
             {
                 test: /\.html$/,
                 loader: 'art-template-loader',
-                options: {}
+                options: {
+                    // this will strip \r\n, whitespaces
+                    minimize: true
+                }
             }
         ]
     },

@@ -19,10 +19,7 @@ module.exports = __webpack_require__(5);
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
+/***/ (function(module, exports) {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
@@ -56,53 +53,41 @@ module.exports = function ($data) {
     'use strict';
     $data = $data || {};
     var $$out = '', admin = $data.admin, users = $data.users, $escape = $imports.$escape, $$blocks = arguments[1] || {};
-    $$out += 'this page is here for ready to be included.\r\n\r\n';
+    $$out += 'this page is here for ready to be included. ';
     if (admin) {
-        $$out += '\r\nWelcome, administrator!\r\n';
+        $$out += ' Welcome, administrator! ';
     } else if (users) {
-        $$out += '\r\nWelcome, ';
+        $$out += ' Welcome, ';
         $$out += $escape(users.length);
-        $$out += '\r\n';
+        $$out += ' ';
     }
-    $$out += '\r\n\r\n';
+    $$out += ' ';
     $$out += __webpack_require__(4)($data);
-    $$out += '\r\n\r\n';
     return $$out;
 };
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_art_template_lib_runtime__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_art_template_lib_runtime___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_art_template_lib_runtime__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__dateFormat__ = __webpack_require__(7);
+// const runtime = require('art-template/lib/runtime');
 
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _runtime = __webpack_require__(0);
-
-var _runtime2 = _interopRequireDefault(_runtime);
-
-var _dateFormat = __webpack_require__(7);
-
-var _dateFormat2 = _interopRequireDefault(_dateFormat);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+// if the target module is exported by CommonJS Module, here we can use `require` or import x from xx
+// let dateFormat = require('./dateFormat');
 
 // but if the target module is exported by es6's `export`, best use `import` here
 // if you have to use `require` , you must call it's 'default' property to get the actual module. For example:
 // let dateFormat = require('./dateFormat').default;
 // so, es6 module is the standard and best way.
-// const runtime = require('art-template/lib/runtime');
-console.log(_dateFormat2.default);
-// if the target module is exported by CommonJS Module, here we can use `require` or import x from xx
-// let dateFormat = require('./dateFormat');
+console.log(__WEBPACK_IMPORTED_MODULE_1__dateFormat__["a" /* default */]);
+__WEBPACK_IMPORTED_MODULE_0_art_template_lib_runtime___default.a.dateFormat = __WEBPACK_IMPORTED_MODULE_1__dateFormat__["a" /* default */];
 
-_runtime2.default.dateFormat = _dateFormat2.default;
-
-exports.default = _runtime2.default;
+/* harmony default export */ __webpack_exports__["default"] = (__WEBPACK_IMPORTED_MODULE_0_art_template_lib_runtime___default.a);
 // module.exports = runtime;
 
 /***/ }),
@@ -114,17 +99,17 @@ module.exports = function ($data) {
     'use strict';
     $data = $data || {};
     var $$out = '', $each = $imports.$each, users = $data.users, $value = $data.$value, $index = $data.$index, $escape = $imports.$escape;
-    $$out += 'list for example:\r\n<ul>\r\n';
+    $$out += 'list for example:<ul> ';
     $each(users, function ($value, $index) {
-        $$out += '\r\n    <li>';
+        $$out += ' <li>';
         $$out += $escape($value.name);
         $$out += ':';
         $$out += $escape($value.email);
         $$out += '. born at ';
         $$out += $escape($imports.dateFormat($value.birthday, 'yyyyMMdd'));
-        $$out += '</li>\r\n';
+        $$out += '</li> ';
     });
-    $$out += '\r\n</ul>';
+    $$out += ' </ul>';
     return $$out;
 };
 
@@ -241,10 +226,7 @@ module.exports = runtime;
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-/* WEBPACK VAR INJECTION */(function(global) {
-
-module.exports = false;
+/* WEBPACK VAR INJECTION */(function(global) {module.exports = false;
 
 // Only Node.JS has a process variable that is of [[Class]] process
 try {
@@ -254,14 +236,9 @@ try {
 
 /***/ }),
 /* 7 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
 var functionsMap = {
     "M": function M(date) {
         return date.getMonth() + 1;
@@ -285,9 +262,9 @@ var functionsMap = {
         return date.getMilliseconds();
     } //毫秒
 };
-var formatReg = /([yMdhmsqS])+/g;
+var formatReg = /([yMdhmsqS])\1*/g;
 var dateFormat = function dateFormat(date, format) {
-
+    console.log(date, format);
     if (typeof date === "string") {
         var mts = date.match(/(\/Date\((\d+)\)\/)/);
         if (mts && mts.length >= 3) {
@@ -301,6 +278,7 @@ var dateFormat = function dateFormat(date, format) {
 
     return format.replace(formatReg, function (all, t) {
         var v = functionsMap[t];
+        console.log(v, all, t);
         if (v !== undefined) {
             v = v(date);
             if (all.length > 1) {
@@ -318,24 +296,24 @@ var dateFormat = function dateFormat(date, format) {
 };
 
 // module.exports = dateFormat;
-exports.default = dateFormat;
+/* harmony default export */ __webpack_exports__["a"] = (dateFormat);
 
 /***/ }),
 /* 8 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // the 'tem' will be a render function, not a template source string.
 // let tem = require('./views/extend.html');
 __webpack_require__(3);
 // import runtime from './helper';
 
 var tem = __webpack_require__(2);
+
+// import('./views/extend.html').then(function (extend) {
+//     console.log(extend(data));
+// });
 
 var data = {
     users: [{
@@ -354,7 +332,7 @@ var html = tem(data);
 
 console.log(html);
 document.body.innerHTML = html;
-exports.default = tem;
+/* harmony default export */ __webpack_exports__["default"] = (tem);
 
 /***/ })
 ],[8]);

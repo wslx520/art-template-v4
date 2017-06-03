@@ -5,6 +5,10 @@ require('./helper');
 
 let tem = require('./views/include.html');
 
+// import('./views/extend.html').then(function (extend) {
+//     console.log(extend(data));
+// });
+
 let data = {
     users: [{
         name: 'xlee',

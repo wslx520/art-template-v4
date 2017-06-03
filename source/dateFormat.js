@@ -7,9 +7,9 @@ let functionsMap = {
     "q": date => (Math.floor((date.getMonth() + 3) / 3)), //季度
     "S": date => (date.getMilliseconds()) //毫秒
 }
-let formatReg = /([yMdhmsqS])+/g;
+let formatReg = /([yMdhmsqS])\1*/g;
 let dateFormat =  function (date, format) {
-
+    // console.log(date, format);
     if (typeof date === "string") {
         var mts = date.match(/(\/Date\((\d+)\)\/)/);
         if (mts && mts.length >= 3) {
@@ -24,6 +24,7 @@ let dateFormat =  function (date, format) {
 
     return format.replace(formatReg, function(all, t){
         var v = functionsMap[t];
+        // console.log(v, all, t);
         if(v !== undefined){
             v = v(date);
             if(all.length > 1){
