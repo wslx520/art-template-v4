@@ -1,0 +1,10 @@
+this page is here for ready to be included.
+
+{{if admin}}
+Welcome, administrator!
+{{else if users}}
+Welcome, {{users.length}}
+{{/if}}
+
+{{include './list.html'}}
+

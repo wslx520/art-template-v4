@@ -1,0 +1,6 @@
+list for example:
+<ul>
+{{each users}}
+    <li>{{$value.name}}:{{$value.email}}. born at {{$value.birthday | dateFormat:'yyyyMMdd'}}</li>
+{{/each}}
+</ul>

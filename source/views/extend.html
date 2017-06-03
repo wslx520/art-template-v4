@@ -1,0 +1,12 @@
+{{extend './layout.html'}}
+
+{{block 'title'}}This is actual title in extend page {{/block}}
+
+{{block 'head'}}
+<link rel="stylesheet" href="extend.css">
+{{/block}}
+
+{{block 'body'}}
+body content in extend
+{{include './include.html'}}
+{{/block}}
