@@ -5,9 +5,16 @@ require('./helper');
 
 let tem = require('./views/include.html');
 
-// import('./views/extend.html').then(function (extend) {
-//     console.log(extend(data));
-// });
+// this import() function is an async 'require' way in webpack 2.
+// we can specify the chunk name by a 'magic comment'
+setTimeout(() => {
+    import(/* webpackChunkName: "r_extend" */ './views/extend.html').then(function (extend) {
+        console.log(data, extend(data));
+    });
+    import('./combine').then(function (combined) {
+        console.log(combined, combined.default);
+    })
+}, 1000)
 
 let data = {
     users: [{
@@ -17,7 +24,7 @@ let data = {
     },{
         name: 'breeco',
         email: 'breeco@gmail.com',
-        birthday: new Date(2000, 12, 22)
+        birthday: new Date(2000, 11, 22)
     }],
     admin: false
 }

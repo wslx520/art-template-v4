@@ -1,0 +1,1 @@
+试验 [art-template v4](https://github.com/aui/art-template)的webpack预编译功能
