@@ -24,11 +24,11 @@ module.exports = {
             {
                 test: /\.js$/,
                 loader: 'babel-loader',
-                        options: {
-                            // TIP: nested array
-                            presets: ['babel-preset-env', 'babel-preset-es2015-loose'].map(require.resolve),
-                            plugins: ['babel-plugin-syntax-dynamic-import'].map(require.resolve)
-                        }
+                options: {
+                    // TIP: nested array
+                    presets: ['babel-preset-env', 'babel-preset-es2015-loose'].map(require.resolve),
+                    plugins: ['babel-plugin-syntax-dynamic-import'].map(require.resolve)
+                }
                 // use: [
                 //     // {loader: 'es3ify-loader'},
                 //     {
@@ -52,6 +52,7 @@ module.exports = {
             },
             // {
             //     test: /\.js$/,
+            //      这个 loader 不支持 webpack 自家的新的 import()语法, 导致没法用
             //     loader: 'es3ify-loader',
             //     enforce: 'post'
             // },
@@ -68,9 +69,6 @@ module.exports = {
     // devtool: 'eval',
     devtool: 'source-map',
     plugins: [
-        // new webpack.optimize.splitChunks({
-        //     name: ['manifest']
-        // }),
         // new webpack.optimize.UglifyJsPlugin({
         //     ie8: true,
         //     compress: {
@@ -101,20 +99,20 @@ module.exports = {
             }
         },
         // minimize:false
-        minimizer: [
-            new UglifyJSPlugin({
-                uglifyOptions: {
-                    // VERY IMPORTANT for ie8-
-                    ie8: true,
-                    compress: {
-                        warnings: false,
-                        drop_console: false
-                    },
-                    // if you forget this, you will lose source map for the compressed code.
-                    sourceMap: true
-                }
-            })
-        ]
+        // minimizer: [
+        //     new UglifyJSPlugin({
+        //         uglifyOptions: {
+        //             // VERY IMPORTANT for ie8-
+        //             ie8: true,
+        //             compress: {
+        //                 warnings: false,
+        //                 drop_console: true
+        //             },
+        //             // if you forget this, you will lose source map for the compressed code.
+        //             sourceMap: true
+        //         }
+        //     })
+        // ]
     },
-    // mode: 'development'
+    mode: 'development'
 }

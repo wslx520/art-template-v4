@@ -7,7 +7,7 @@ import dateFormat from './dateFormat';
 // if you have to use `require` , you must call it's 'default' property to get the actual module. For example:
 // let dateFormat = require('./dateFormat').default;
 // so, es6 module is the standard and best way.
-console.log(dateFormat);
+// console.log(dateFormat);
 runtime.dateFormat = dateFormat
 
 export default runtime;

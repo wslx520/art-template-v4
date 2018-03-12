@@ -8,12 +8,17 @@ let tem = require('./views/include.html');
 // this import() function is an async 'require' way in webpack 2.
 // we can specify the chunk name by a 'magic comment'
 setTimeout(() => {
-    import(/* webpackChunkName: "r_extend" */ './views/extend.html').then(function (extend) {
-        console.log(data, extend(data));
-    });
+    // console.log('setTimeout');
+    // 直接 import 一个 html , 在IE下静默失败, 不知为何
+    // import(/* webpackChunkName: "sub" */ './views/sub.html').then(function (sub) {
+    //     console.log(111111,data, sub.default(data));
+    //     document.body.insertAdjacentHTML('beforeend', sub.default(data));
+    // });
+    // 但通过JS包裹一层再导入, 则正常执行
     import('./combine').then(function (combined) {
-        console.log(combined, combined['default']);
-    })
+        console.log(combined, combined['sub']);
+        document.body.insertAdjacentHTML('beforeend', combined.sub(data));
+    });
 }, 1000)
 
 let data = {
@@ -31,6 +36,6 @@ let data = {
 
 let html = tem(data);
 
-console.log(html);
+// console.log(html);
 document.body.innerHTML = html;
 export default tem;
