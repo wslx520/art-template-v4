@@ -12,7 +12,7 @@ setTimeout(() => {
         console.log(data, extend(data));
     });
     import('./combine').then(function (combined) {
-        console.log(combined, combined.default);
+        console.log(combined, combined['default']);
     })
 }, 1000)
 

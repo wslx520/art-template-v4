@@ -1,8 +1,10 @@
 const path = require('path')
 const webpack = require('webpack');
 
-// 此插件有问题，暂时不要用
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
+// 此插件有问题，暂时不要用 (https://github.com/webpack-contrib/npm-install-webpack-plugin/issues/105)
 const InstallPlugin = require('npm-install-webpack-plugin');
+const es3ifyPlugin = require('es3ify-webpack-plugin');
 module.exports = {
     entry: ['./source/index.js'],
     output: {
@@ -22,11 +24,24 @@ module.exports = {
             {
                 test: /\.js$/,
                 loader: 'babel-loader',
-                options: {
-                    // TIP: nested array
-                    presets: [['es2015', {modules: false}]],
-                    plugins: ['syntax-dynamic-import']
-                }
+                        options: {
+                            // TIP: nested array
+                            presets: ['babel-preset-env', 'babel-preset-es2015-loose'].map(require.resolve),
+                            plugins: ['babel-plugin-syntax-dynamic-import'].map(require.resolve)
+                        }
+                // use: [
+                //     // {loader: 'es3ify-loader'},
+                //     {
+                //         loader: 'babel-loader',
+                //         options: {
+                //             // TIP: nested array
+                //             presets: ['babel-preset-env', 'babel-preset-es2015-loose'].map(require.resolve),
+                //             plugins: ['babel-plugin-syntax-dynamic-import'].map(require.resolve)
+                //         }
+                //     }
+
+                // ]
+                
                 // use: [{
                 //     loader: 'babel-loader',
                 //     options: {
@@ -35,6 +50,11 @@ module.exports = {
                 //     }
                 // }]
             },
+            // {
+            //     test: /\.js$/,
+            //     loader: 'es3ify-loader',
+            //     enforce: 'post'
+            // },
             {
                 test: /\.html$/,
                 loader: 'art-template-loader',
@@ -45,21 +65,56 @@ module.exports = {
             }
         ]
     },
+    // devtool: 'eval',
     devtool: 'source-map',
     plugins: [
-        new webpack.optimize.CommonsChunkPlugin({
-            name: ['manifest']
-        }),
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false,
-                drop_console: false
-            },
-            // if you forget this, you will lose source map for the compressed code.
-            sourceMap: true
-        }),
-        new webpack.HotModuleReplacementPlugin(),
+        // new webpack.optimize.splitChunks({
+        //     name: ['manifest']
+        // }),
+        // new webpack.optimize.UglifyJsPlugin({
+        //     ie8: true,
+        //     compress: {
+        //         warnings: false,
+        //         drop_console: false
+        //     },
+        //     // if you forget this, you will lose source map for the compressed code.
+        //     sourceMap: true
+        // }),
+        // 此插件有不兼容 IE8- 的代码: Object.defineProperty - getter setter
+        // new webpack.HotModuleReplacementPlugin(),
         // auto install dependences
         // new InstallPlugin()
-    ]
+        // 生成兼容 IE8- 的代码
+        new es3ifyPlugin()
+    ],
+    optimization: {
+        runtimeChunk: {
+            name: 'manifest'
+        },
+        splitChunks: {
+            cacheGroups: {
+                commons: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: "vendor",
+                    chunks: "all"
+                }
+            }
+        },
+        // minimize:false
+        minimizer: [
+            new UglifyJSPlugin({
+                uglifyOptions: {
+                    // VERY IMPORTANT for ie8-
+                    ie8: true,
+                    compress: {
+                        warnings: false,
+                        drop_console: false
+                    },
+                    // if you forget this, you will lose source map for the compressed code.
+                    sourceMap: true
+                }
+            })
+        ]
+    },
+    // mode: 'development'
 }

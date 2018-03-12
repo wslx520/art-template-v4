@@ -5,6 +5,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>art-template v4 test</title>
+    <!--[if lte IE 8]>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.10/es5-shim.min.js"></script>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.10/es5-sham.min.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/json2/20160511/json2.min.js"></script>
+    <![endif]-->
+    <!--[if IE]>
+    	<script src="https://cdn.jsdelivr.net/npm/es6-promise/dist/es6-promise.min.js"></script>
+    	<script>window.Promise = ES6Promise;</script>
+    <![endif]-->
+    <script>
+    	// https://tc39.github.io/ecma262/#sec-array.prototype.includes
+if (!Array.prototype.includes) {
+  Array.prototype.includes=function(searchElement, fromIndex) {
+
+      if (this == null) {
+        throw new TypeError('"this" is null or not defined');
+      }
+
+      // 1. Let O be ? ToObject(this value).
+      var o = Object(this);
+
+      // 2. Let len be ? ToLength(? Get(O, "length")).
+      var len = o.length >>> 0;
+
+      // 3. If len is 0, return false.
+      if (len === 0) {
+        return false;
+      }
+
+      // 4. Let n be ? ToInteger(fromIndex).
+      //    (If fromIndex is undefined, this step produces the value 0.)
+      var n = fromIndex | 0;
+
+      // 5. If n ≥ 0, then
+      //  a. Let k be n.
+      // 6. Else n < 0,
+      //  a. Let k be len + n.
+      //  b. If k < 0, let k be 0.
+      var k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
+
+      function sameValueZero(x, y) {
+        return x === y || (typeof x === 'number' && typeof y === 'number' && isNaN(x) && isNaN(y));
+      }
+
+      // 7. Repeat, while k < len
+      while (k < len) {
+        // a. Let elementK be the result of ? Get(O, ! ToString(k)).
+        // b. If SameValueZero(searchElement, elementK) is true, return true.
+        if (sameValueZero(o[k], searchElement)) {
+          return true;
+        }
+        // c. Increase k by 1. 
+        k++;
+      }
+
+      // 8. Return false
+      return false;
+    }
+  
+}
+    </script>
 </head>
 <body>
     <script src="./dist/manifest.js"></script>

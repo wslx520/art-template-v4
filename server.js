@@ -9,7 +9,7 @@ const port = 3000;
 // config.entry.unshift(`webpack-dev-server/client?http://localhost:${port}/`);
 let compiler = webpack(config);
 let serverConfig = {
-    contentBase :'./dist',
+    contentBase :'./',
     watchContentBase: true,
     // override the config in webpack.config
     // DO NOT start with .
@@ -22,7 +22,7 @@ let serverConfig = {
 
 let server = new DevServer(compiler, serverConfig);
 
-server.listen(3000, function(err) {
+server.listen(port, function(err) {
     if (err) throw err;
     console.log(`webpack dev server listening at port: ${port}`)
 });
