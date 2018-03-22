@@ -10,15 +10,16 @@ let tem = require('./views/include.html');
 setTimeout(() => {
     // console.log('setTimeout');
     // 直接 import 一个 html , 在IE下静默失败, 不知为何
-    // import(/* webpackChunkName: "sub" */ './views/sub.html').then(function (sub) {
-    //     console.log(111111,data, sub.default(data));
-    //     document.body.insertAdjacentHTML('beforeend', sub.default(data));
-    // });
-    // 但通过JS包裹一层再导入, 则正常执行
-    import('./combine').then(function (combined) {
-        console.log(combined, combined['sub']);
-        document.body.insertAdjacentHTML('beforeend', combined.sub(data));
+    // 要使用 webpackChunkName, 需在 babel 中配置 comments: true. 不然 babel 在转换时会丢掉 magic comments
+    import(/* webpackChunkName: "sub" */ './views/sub.html').then(function (sub) {
+        console.log(111111,data, sub.default(data));
+        document.body.insertAdjacentHTML('beforeend', sub.default(data));
     });
+    // 但通过JS包裹一层再导入, 则正常执行
+    // import('./combine').then(function (combined) {
+    //     console.log(combined, combined['sub']);
+    //     document.body.insertAdjacentHTML('beforeend', combined.sub(data));
+    // });
 }, 1000)
 
 let data = {

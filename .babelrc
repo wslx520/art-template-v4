@@ -3,7 +3,7 @@
 		["env", {"modules": false}],
 		["es2015", {"loose": true}]
 	],
-	"comments": false,
+	"comments": true,
 	"env": {
 		"test": {
 			"presets": ["env", "es2015-loose"]
