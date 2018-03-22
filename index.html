@@ -12,10 +12,10 @@
     <!--[if lt IE 8]>
     	<script src="https://cdnjs.cloudflare.com/ajax/libs/json2/20160511/json2.min.js"></script>
     <![endif]-->
-    <!--[if IE]>
+    
     	<script src="https://cdn.jsdelivr.net/npm/es6-promise/dist/es6-promise.min.js"></script>
-    	<script>window.Promise = ES6Promise;</script>
-    <![endif]-->
+    	<script>if (!window.Promise) {window.Promise = ES6Promise;}</script>
+    
     <script>
     	// https://tc39.github.io/ecma262/#sec-array.prototype.includes
 if (!Array.prototype.includes) {

@@ -99,20 +99,33 @@ module.exports = {
             }
         },
         // minimize:false
-        // minimizer: [
-        //     new UglifyJSPlugin({
-        //         uglifyOptions: {
-        //             // VERY IMPORTANT for ie8-
-        //             ie8: true,
-        //             compress: {
-        //                 warnings: false,
-        //                 drop_console: true
-        //             },
-        //             // if you forget this, you will lose source map for the compressed code.
-        //             sourceMap: true
-        //         }
-        //     })
-        // ]
+        minimizer: [
+        // 在使用 --mode production 的情况下, 这个压缩配置依然有效不会被忽视
+        // 不然一开 production ,压出来就不兼容IE8了
+            new UglifyJSPlugin({
+                uglifyOptions: {
+                    // VERY IMPORTANT for ie8-
+                    ie8: true,
+                    compress: {
+                        warnings: false,
+                        drop_console: true
+                    },
+                    // if you forget this, you will lose source map for the compressed code.
+                    sourceMap: true
+                }
+            })
+        ]
     },
+    devServer: {
+        contentBase :'./',
+        watchContentBase: true,
+        // override the config in webpack.config
+        // DO NOT start with .
+        // and then /dist = /dist/, but recommend /dist/
+        publicPath: '/dist/',
+        // auto refresh
+        hot: true,
+        historyApiFallback: true
+    }
     // mode: 'development'
 }
